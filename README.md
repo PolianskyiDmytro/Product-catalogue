@@ -25,7 +25,7 @@ This project was created to practice building real-world React applications, imp
 
 ## 🌐 Live Demo
 
-[View Project]()
+[View Project](https://polianskyidmytro.github.io/Product-catalogue/)
 
 ## 🚀 Getting Started
 ### 📥 Clone the repository
