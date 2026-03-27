@@ -1,4 +1,4 @@
-#📱 React Phone Catalog
+# 📱 React Phone Catalog
 
 A responsive phone catalog web application built with React.
 The project simulates a real e-commerce interface with product listing, filtering, product details pages, and a clean modern UI. It focuses on scalable component architecture and best practices in React development.
