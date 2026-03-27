@@ -30,8 +30,9 @@ This project was created to practice building real-world React applications, imp
 ## 🚀 Getting Started
 ### 📥 Clone the repository
 git clone [https://github.com/PolianskyiDmytro/Product-catalogue.git](https://github.com/PolianskyiDmytro/Product-catalogue.git)
+
 cd react_phone-catalog
-📦 Install dependencies
+### 📦 Install dependencies
 npm install
 # or
 yarn install
