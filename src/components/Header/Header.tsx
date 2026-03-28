@@ -123,10 +123,11 @@ export const Header: React.FC<Props> = ({ isMenuOpen, setIsMenuOpen }) => {
                   onBlur={() => setIsFocused(false)}
                   className={header.search}
                 />
-                {searchValue && (
+                {isFocused && searchValue && (
                   <button
                     type="button"
                     className={header.search__clear}
+                    disabled={!isFocused}
                     onMouseDown={event => event.preventDefault()}
                     onClick={() => setSearchValue('')}
                   ></button>

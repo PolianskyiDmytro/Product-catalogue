@@ -109,48 +109,58 @@ export const ProductsPage: React.FC<Props> = ({ products, title }) => {
   return (
     <div className={style.products}>
       <div className="container">
-        <div className={style.products__content}>
-          <Nav />
-          <div className={style['products__page-details']}>
-            <h1 className={style.products__title}>{title}</h1>
-            {title !== 'Favourites' ? (
-              <p className={style.products__amount}>{products.length} models</p>
-            ) : (
-              <p className={style.products__amount}>{products.length} items</p>
-            )}
-          </div>
+        {prodsLength === 0 && query && (
+          <p className={style.products__empty}>
+            There are no {title.toLowerCase()} matching the query
+          </p>
+        )}
 
-          <div className={style.products__top}>
-            {title !== 'Favourites' && (
-              <div className={style.products__settings}>
-                <Select data={sortBy} onSelect={handleSort} />
-                <Select data={itemsPerPage} onSelect={handleAmount} />
-              </div>
-            )}
-            <div className={style.products__list}>
-              {prodsLength === 0 && query && (
-                <p className={style.products__empty}>
-                  There are no {title.toLowerCase()} matching the query
+        {prodsLength === 0 && !query && (
+          <p className={style.products__empty}>
+            There are no {title.toLowerCase()} yet
+          </p>
+        )}
+        {prodsLength > 0 && (
+          <div className={style.products__content}>
+            <Nav />
+            <div className={style['products__page-details']}>
+              <h1 className={style.products__title}>{title}</h1>
+              {title !== 'Favourites' ? (
+                <p className={style.products__amount}>
+                  {products.length} models
+                </p>
+              ) : (
+                <p className={style.products__amount}>
+                  {products.length} items
                 </p>
               )}
-
-              {title !== 'Favourites' &&
-                sortedProducts.slice(firstItem, lastItem).map(product => (
-                  <div key={product.id} className={style.products__product}>
-                    <ProductCard product={product} isFullPrice={false} />
-                  </div>
-                ))}
-
-              {title === 'Favourites' &&
-                products.slice(firstItem, lastItem).map(product => (
-                  <div key={product.id} className={style.products__product}>
-                    <ProductCard product={product} isFullPrice={false} />
-                  </div>
-                ))}
             </div>
+            <div className={style.products__top}>
+              {title !== 'Favourites' && (
+                <div className={style.products__settings}>
+                  <Select data={sortBy} onSelect={handleSort} />
+                  <Select data={itemsPerPage} onSelect={handleAmount} />
+                </div>
+              )}
+              <div className={style.products__list}>
+                {title !== 'Favourites' &&
+                  sortedProducts.slice(firstItem, lastItem).map(product => (
+                    <div key={product.id} className={style.products__product}>
+                      <ProductCard product={product} isFullPrice={false} />
+                    </div>
+                  ))}
+
+                {title === 'Favourites' &&
+                  products.slice(firstItem, lastItem).map(product => (
+                    <div key={product.id} className={style.products__product}>
+                      <ProductCard product={product} isFullPrice={false} />
+                    </div>
+                  ))}
+              </div>
+            </div>
+            {pageCount > 1 && <Pagination pageCount={pageCount} />}
           </div>
-          {pageCount > 1 && <Pagination pageCount={pageCount} />}
-        </div>
+        )}
       </div>
     </div>
   );

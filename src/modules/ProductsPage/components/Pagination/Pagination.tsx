@@ -13,10 +13,29 @@ export const Pagination: React.FC<Props> = ({ pageCount }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { scrollToSect } = useContext(ScrollToSectContext);
   const page = searchParams.get('page');
+  const currentPage = page ? +page : 1;
+
+  const getPageButtons = (): number[] => {
+    if (pageCount <= 5) {
+      return Array.from({ length: pageCount }, (_, i) => i + 1);
+    }
+
+    let start = currentPage - 2;
+    let end = currentPage + 2;
+
+    if (start < 1) {
+      start = 1;
+      end = 5;
+    } else if (end > pageCount) {
+      start = pageCount - 4;
+      end = pageCount;
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
 
   const handleClick = () => {
     const params = new URLSearchParams(searchParams);
-    const currentPage = page ? +page : 1;
     const newPage = currentPage + 1;
 
     if (newPage <= pageCount) {
@@ -52,13 +71,12 @@ export const Pagination: React.FC<Props> = ({ pageCount }) => {
       />
 
       <div className={pagination.pagination__pages} id="pagination">
-        {Array.from({ length: pageCount }, (_, i) => {
-          const pageNum = i + 1;
-          const isCurrentPage = page ? +page === pageNum : i === 0;
+        {getPageButtons().map(pageNum => {
+          const isCurrentPage = currentPage === pageNum;
 
           return (
             <button
-              key={i + 1}
+              key={pageNum}
               onClick={() => {
                 const params = new URLSearchParams(searchParams);
 
@@ -75,7 +93,7 @@ export const Pagination: React.FC<Props> = ({ pageCount }) => {
                 [pagination['pagination__button--active']]: isCurrentPage,
               })}
             >
-              {i + 1}
+              {pageNum}
             </button>
           );
         })}
