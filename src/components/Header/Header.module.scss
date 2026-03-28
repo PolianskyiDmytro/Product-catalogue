@@ -210,7 +210,7 @@
     box-shadow 0.2s,
     border-color 0.2s;
 
-  @include on-tablet {
+  @include on-ver-tablet {
     display: none;
   }
 
