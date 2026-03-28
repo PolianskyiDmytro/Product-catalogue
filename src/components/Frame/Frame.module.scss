@@ -1,4 +1,10 @@
 @import '../../style/main';
+.frame {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
 
 .main {
   box-sizing: border-box;

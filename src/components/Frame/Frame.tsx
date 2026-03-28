@@ -27,7 +27,7 @@ export const Frame = () => {
       ) : (
         <>
           <main className={frame.main}>
-            <div className="frame">
+            <div className={frame.frame}>
               <Outlet />
             </div>
           </main>

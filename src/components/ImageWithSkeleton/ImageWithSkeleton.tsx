@@ -15,13 +15,11 @@ export function ImageWithSkeleton({
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className={cn(className, { skeleton: !loaded })}>
-      <img
-        src={src}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        className={cn(className, { hidden: !loaded })}
-      />
-    </div>
+    <img
+      src={src}
+      alt={alt}
+      onLoad={() => setLoaded(true)}
+      className={cn(className, { hidden: !loaded, skeleton: !loaded })}
+    />
   );
 }
