@@ -231,6 +231,10 @@
     z-index: 200;
     background-image: none;
     color: $main-color;
+
+    @include on-mobile {
+      width: 130px;
+    }
   }
 
   &::placeholder {
