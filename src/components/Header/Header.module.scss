@@ -210,6 +210,13 @@
     box-shadow 0.2s,
     border-color 0.2s;
 
+  @include on-tablet {
+    display: none;
+  }
+
+  @include on-mobile {
+    display: flex;
+  }
   // Focus state
   &:focus {
     width: 200px; // expanded width
