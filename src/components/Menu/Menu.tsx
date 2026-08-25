@@ -2,15 +2,15 @@ import { NavLink } from 'react-router-dom';
 import menu from './Menu.module.scss';
 import cn from 'classnames';
 import React, { useContext } from 'react';
-import { AddToCartContext } from '../../contexts/AddToCartContext';
 import { AddToFavContext } from '../../contexts/AddToFavContext';
+import { useAppSelector } from '../../store/hooks';
 
 type Props = {
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const Menu: React.FC<Props> = ({ setIsMenuOpen }) => {
-  const { cart } = useContext(AddToCartContext);
+  const cart = useAppSelector(state => state.cart.items);
   const { fav } = useContext(AddToFavContext);
 
   return (

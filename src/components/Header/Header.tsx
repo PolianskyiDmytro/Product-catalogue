@@ -3,9 +3,9 @@ import header from './Header.module.scss';
 import { Link, NavLink } from 'react-router-dom';
 import React, { useContext } from 'react';
 import { AddToFavContext } from '../../contexts/AddToFavContext';
-import { AddToCartContext } from '../../contexts/AddToCartContext';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../store/hooks';
 
 type Props = {
   isMenuOpen: boolean;
@@ -14,7 +14,7 @@ type Props = {
 
 export const Header: React.FC<Props> = ({ isMenuOpen, setIsMenuOpen }) => {
   const { fav } = useContext(AddToFavContext);
-  const { cart } = useContext(AddToCartContext);
+  const cart = useAppSelector(state => state.cart.items);
   const location = useLocation();
   const showSearch =
     (location.pathname.startsWith('/phones') ||

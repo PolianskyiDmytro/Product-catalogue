@@ -1,35 +1,28 @@
-import { useContext } from 'react';
-import { AddToCartContext } from '../../../../contexts/AddToCartContext';
 import { CartProduct } from '../../../../types/CartProduct';
 import style from './CartItems.module.scss';
 import cn from 'classnames';
 import { ImageWithSkeleton } from '../../../../components/ImageWithSkeleton';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from '../../../../store/slices/cartSlice';
 
 export const CartItems = () => {
-  const { cart, setCart } = useContext(AddToCartContext);
+  const cart = useAppSelector(state => state.cart.items);
+  const dispatch = useAppDispatch();
 
   const handleMinus = (item: CartProduct) => {
-    setCart(currCart =>
-      currCart.map(currItem =>
-        currItem.itemId === item.itemId
-          ? { ...currItem, quantity: currItem.quantity - 1 }
-          : currItem,
-      ),
-    );
+    dispatch(decreaseQuantity(item.itemId));
   };
 
   const handlePlus = (item: CartProduct) => {
-    setCart(currCart =>
-      currCart.map(currItem =>
-        currItem.itemId === item.itemId
-          ? { ...currItem, quantity: currItem.quantity + 1 }
-          : currItem,
-      ),
-    );
+    dispatch(increaseQuantity(item.itemId));
   };
 
   const handleDelete = (item: CartProduct) => {
-    setCart(currCart => currCart.filter(i => i.itemId !== item.itemId));
+    dispatch(removeFromCart(item.itemId));
   };
 
   return (

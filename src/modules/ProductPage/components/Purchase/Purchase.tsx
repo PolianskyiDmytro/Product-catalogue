@@ -1,12 +1,13 @@
 import cn from 'classnames';
 import style from './Purchase.module.scss';
 import { DetailedProduct } from '../../../../types/DetailedProduct';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AddToCartContext } from '../../../../contexts/AddToCartContext';
 import { AddToFavContext } from '../../../../contexts/AddToFavContext';
 import { Product } from '../../../../types/Product';
 import { CartProduct } from '../../../../types/CartProduct';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { addToCart, removeFromCart } from '../../../../store/slices/cartSlice';
 
 type Props = {
   product: DetailedProduct;
@@ -24,11 +25,10 @@ export const Purchase: React.FC<Props> = ({
   const navigate = useNavigate();
   const fullPrice = product.priceRegular;
   const price = product.priceDiscount;
-  const { cart, setCart } = useContext(AddToCartContext);
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector(state => state.cart.items);
   const { fav, setFav } = useContext(AddToFavContext);
-  const [isPicked, setIsPicked] = useState(
-    cart.some(item => item.itemId === product.id),
-  );
+  const isPicked = cart.some(item => item.itemId === product.id);
   const appleColors: { [name: string]: string } = {
     black: '#000000', // classic black
     green: '#4D7B6A', // midnight green
@@ -88,12 +88,10 @@ export const Purchase: React.FC<Props> = ({
 
   const handleCart = () => {
     if (cart.some(p => p.itemId === cartProduct.itemId)) {
-      setCart(currCart => currCart.filter(item => item.itemId !== product.id));
+      dispatch(removeFromCart(product.id));
     } else {
-      setCart(currCart => [...currCart, cartProduct]);
+      dispatch(addToCart(cartProduct));
     }
-
-    setIsPicked(!isPicked);
   };
 
   return (

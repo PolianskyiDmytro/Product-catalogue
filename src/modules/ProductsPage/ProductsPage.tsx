@@ -92,7 +92,6 @@ export const ProductsPage: React.FC<Props> = ({ products, title }) => {
     const firstItemIndex = (currentPage - 1) * itemsOnPage;
     const lastItemIndex = firstItemIndex + itemsOnPage;
 
-    // If last item exceeds total items, move to previous page(s)
     if (lastItemIndex > products.length && currentPage > 1) {
       const newPage = currentPage - 1;
 
@@ -104,7 +103,7 @@ export const ProductsPage: React.FC<Props> = ({ products, title }) => {
 
       setSearchParams(params);
     }
-  }, [products]);
+  }, [products, searchParams, setSearchParams]);
 
   return (
     <div className={style.products}>

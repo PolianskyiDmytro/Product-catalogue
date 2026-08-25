@@ -1,5 +1,4 @@
 import React from 'react';
-import { AddToCartProvider } from './AddToCartContext';
 import { AddToFavProvider } from './AddToFavContext';
 import { ScrollToSectProvider } from './ScrollToSectContext';
 
@@ -10,9 +9,7 @@ type Props = {
 export const Providers: React.FC<Props> = ({ children }) => {
   return (
     <ScrollToSectProvider>
-      <AddToCartProvider>
-        <AddToFavProvider>{children}</AddToFavProvider>
-      </AddToCartProvider>
+      <AddToFavProvider>{children}</AddToFavProvider>
     </ScrollToSectProvider>
   );
 };

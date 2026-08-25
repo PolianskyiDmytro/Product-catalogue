@@ -1,13 +1,14 @@
 import cn from 'classnames';
 import card from './ProductCard.module.scss';
 import { Product } from '../../../types/Product';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ScrollToSectContext } from '../../../contexts/ScrollToSectContext';
-import { AddToCartContext } from '../../../contexts/AddToCartContext';
 import { AddToFavContext } from '../../../contexts/AddToFavContext';
 import { CartProduct } from '../../../types/CartProduct';
 import { ImageWithSkeleton } from '../../../components/ImageWithSkeleton';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { addToCart, removeFromCart } from '../../../store/slices/cartSlice';
 
 type Props = {
   product: Product;
@@ -19,26 +20,21 @@ export const ProductCard: React.FC<Props> = ({
   isFullPrice = false,
 }) => {
   const { scrollToSect } = useContext(ScrollToSectContext);
-  const { cart, setCart } = useContext(AddToCartContext);
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector(state => state.cart.items);
   const { fav, setFav } = useContext(AddToFavContext);
   const cartProduct: CartProduct = {
     ...product,
     quantity: 1,
   };
-  const [isPicked, setIsPicked] = useState(
-    cart.some(item => item.itemId === product.itemId),
-  );
+  const isPicked = cart.some(item => item.itemId === product.itemId);
 
   const handleCart = () => {
     if (cart.some(p => p.itemId === cartProduct.itemId)) {
-      setCart(currCart =>
-        currCart.filter(item => item.itemId !== product.itemId),
-      );
+      dispatch(removeFromCart(product.itemId));
     } else {
-      setCart(currCart => [...currCart, cartProduct]);
+      dispatch(addToCart(cartProduct));
     }
-
-    setIsPicked(!isPicked);
   };
 
   const handleFav = () => {

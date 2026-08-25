@@ -1,16 +1,19 @@
-import { useContext, useState } from 'react';
-import { AddToCartContext } from '../../contexts/AddToCartContext';
-import style from './CartPage.module.scss';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import style from './CartPage.module.scss';
 import { CartItems } from './components/CartItems';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { clearCart } from '../../store/slices/cartSlice';
 
-export const CartPage = () => {
-  const { cart, setCart } = useContext(AddToCartContext);
+export const CartPage: React.FC = () => {
+  const cart = useAppSelector(state => state.cart.items);
+  const dispatch = useAppDispatch();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleConfirm = () => {
-    setCart([]);
+    dispatch(clearCart());
     setIsModalOpen(false);
   };
 
